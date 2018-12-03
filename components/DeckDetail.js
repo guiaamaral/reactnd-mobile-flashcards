@@ -35,15 +35,17 @@ export default class DeckDetail extends Component {
         <View>
           <TouchableOpacity
             style={[styles.button, { borderColor: 'gray', backgroundColor: 'white' }]}
-            onPress={() => navigation.navigate()}
+            onPress={() => navigation.navigate('AddCard', {
+              deckTitle: title,
+            })}
           >
-            <Text>Add Card</Text>
+            <Text>ADD CARD</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { borderColor: '#224D17', backgroundColor: 'green' }]}
+            style={[styles.button, { backgroundColor: 'green' }]}
             onPress={() => navigation.navigate()}
           >
-            <Text>Start Quiz</Text>
+            <Text style={{ color: 'white' }}>START QUIZ</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -55,15 +57,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   info: {
     alignItems: 'center',
-    paddingTop: 150,
-    paddingBottom: 150
+    paddingBottom: 80
   },
   button: {
-    borderWidth: 2,
     borderRadius: Platform.OS === 'ios' ? 12 : 4,
     paddingTop: 16,
     paddingBottom: 16,

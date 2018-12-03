@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Button, Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
 import { getDecks } from '../actions'
 import { fetchDecks } from '../utils/api'
+import { Entypo } from '@expo/vector-icons'
 
 class DeckList extends Component {
+  static navigationOptions = () => {
+    return {
+      headerTitle: 'FlashCards',
+      headerStyle: {
+        backgroundColor: 'red',
+      },
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTintColor: '#fff',
+    }
+  }
   state = {
     ready: false,
   }
@@ -53,6 +66,12 @@ class DeckList extends Component {
             </TouchableOpacity>
           </View>
         ))}
+        <Entypo
+          name="add-to-list"
+          size={32}
+          style={styles.add}
+          onPress={() => this.props.navigation.navigate('AddDeck')}
+        />
       </View>
     )
   }
@@ -79,6 +98,20 @@ const styles = StyleSheet.create({
       height: 3
     },
   },
+  add: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    borderRadius: 30,
+    color: 'white',
+    justifyContent: 'center',
+    height: 52,
+    paddingTop: 10,
+    paddingLeft: 12,
+    width: 52,
+    bottom: 30,
+    position: 'absolute',
+    right: 30,
+  }
 })
 
 export default connect(state => state)(DeckList)
