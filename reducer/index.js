@@ -1,3 +1,5 @@
+import { ADD_DECK } from '../actions'
+import { ADD_CARD } from '../actions'
 import { GET_DECKS } from '../actions'
 
 const initialState = {
@@ -11,8 +13,30 @@ function Deck(state = initialState, action) {
         ...state,
         ...action.decks,
       }
+    case ADD_DECK:
+      return {
+        ...state,
+        decks: {
+          ...state.decks,
+          [action.title]: {
+            title: action.title,
+            questions: [],
+          },
+        },
+      }
+    case ADD_CARD:
+      return {
+        ...state,
+        decks: {
+          ...state.decks,
+          [action.title]: {
+            ...state.decks[action.title],
+            questions: [...state.decks[action.title].questions, action.card]
+          },
+        },
+      }
     default:
-      return state;
+      return state
   }
 }
 

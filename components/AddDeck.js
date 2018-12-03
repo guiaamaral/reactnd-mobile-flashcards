@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View } from 'react-native'
+import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
+import { addDeck } from '../actions'
 
-export default class AddDeck extends Component {
+class AddDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Create new deck',
@@ -30,9 +40,11 @@ export default class AddDeck extends Component {
   }
   submit = () => {
     const { title } = this.state
-    const { navigate } = this.props.navigation
 
     Keyboard.dismiss()
+
+    this.props.dispatch(addDeck(title))
+    this.props.navigation.goBack()
   }
   render() {
     const { title } = this.state
@@ -82,3 +94,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+export default connect()(AddDeck)

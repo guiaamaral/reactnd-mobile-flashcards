@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View } from 'react-native'
+import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
+import { addCard } from '../actions'
 
-export default class AddCard extends Component {
+class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Create new card',
@@ -39,10 +49,15 @@ export default class AddCard extends Component {
     }
   }
   submit = () => {
-    const { title } = this.state
-    const { navigate } = this.props.navigation
-
+    const title = this.props.navigation.state.params.deckTitle
+    const { dispatch } = this.props
+    const { question, answer } = this.state
+    
     Keyboard.dismiss()
+
+    dispatch(addCard(title, {question, answer}))
+    //this.props.navigation.navigate('DeckList')
+    this.props.navigation.goBack()
   }
   render() {
     const { question, answer } = this.state
@@ -66,6 +81,7 @@ export default class AddCard extends Component {
           <TouchableOpacity
             disabled={!question || !answer}
             style={[styles.button, { backgroundColor: 'green' }]}
+            onPress={this.submit}
           >
             <Text style={{ color: 'white' }}>ADD</Text>
           </TouchableOpacity>
@@ -98,3 +114,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+export default connect(state => state)(AddCard)

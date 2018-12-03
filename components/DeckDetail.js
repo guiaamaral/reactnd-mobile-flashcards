@@ -19,14 +19,15 @@ export default class DeckDetail extends Component {
     const {decks, navigation} = this.props
     const title = navigation.state.params.deckTitle
     const cards = navigation.state.params.deckCards
+    const cardsLength = navigation.state.params.deckCardsLength
 
     return (
       <View style={styles.container}>
         <View style={styles.info}>
           <Text style={{ fontSize: 24 }}>{title}</Text>
           <Text style={{ fontSize: 14, color: '#666' }}>
-            {cards}
-            {cards > 1
+            {cardsLength}
+            {cardsLength > 1
               ? ' cards'
               : ' card'
             }
@@ -41,12 +42,20 @@ export default class DeckDetail extends Component {
           >
             <Text>ADD CARD</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: 'green' }]}
-            onPress={() => navigation.navigate()}
-          >
-            <Text style={{ color: 'white' }}>START QUIZ</Text>
-          </TouchableOpacity>
+          {cardsLength === 0
+            ? <View style={{ alignItems: 'center' }}>
+                <Text>Add some cards to play Quiz</Text>
+            </View>
+            : <TouchableOpacity
+              style={[styles.button, { backgroundColor: 'green' }]}
+              onPress={() => navigation.navigate('Quiz', {
+              deckTitle: title,
+              deckCards: cards
+            })}
+            >
+              <Text style={{ color: 'white' }}>START QUIZ</Text>
+            </TouchableOpacity>
+          }
         </View>
       </View>
     )

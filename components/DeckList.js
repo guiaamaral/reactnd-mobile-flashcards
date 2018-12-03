@@ -52,7 +52,8 @@ class DeckList extends Component {
               onPress={() =>
                 this.props.navigation.navigate('DeckDetail', {
                   deckTitle: this.props.decks[deck].title,
-                  deckCards: this.props.decks[deck].questions.length,
+                  deckCards: this.props.decks[deck].questions,
+                  deckCardsLength: this.props.decks[deck].questions.length,
                 })}
             >
               <Text style={{ fontSize: 24 }}>{decks[deck].title}</Text>
