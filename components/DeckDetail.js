@@ -33,11 +33,12 @@ export default class DeckDetail extends Component {
             }
           </Text>
         </View>
-        <View>
+        <View style={styles.btns}>
           <TouchableOpacity
-            style={[styles.button, { borderColor: 'gray', backgroundColor: 'white' }]}
+            style={[styles.button, { marginLeft: 0, borderColor: 'gray', backgroundColor: 'white' }]}
             onPress={() => navigation.navigate('AddCard', {
               deckTitle: title,
+              deckCards: cardsLength,
             })}
           >
             <Text>ADD CARD</Text>
@@ -72,12 +73,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 80
   },
+  btns: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   button: {
     borderRadius: Platform.OS === 'ios' ? 12 : 4,
     paddingTop: 16,
     paddingBottom: 16,
-    paddingLeft: 100,
-    paddingRight: 100,
+    paddingLeft: 42,
+    paddingRight: 44,
+    marginLeft: 16,
     marginBottom: 16,
     justifyContent: 'center',
   },

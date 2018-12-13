@@ -50,14 +50,14 @@ class AddCard extends Component {
   }
   submit = () => {
     const title = this.props.navigation.state.params.deckTitle
-    const { dispatch } = this.props
+    const { dispatch, navigation } = this.props
     const { question, answer } = this.state
     
     Keyboard.dismiss()
 
     dispatch(addCard(title, {question, answer}))
-    //this.props.navigation.navigate('DeckList')
-    this.props.navigation.goBack()
+    
+    navigation.goBack()
   }
   render() {
     const { question, answer } = this.state
