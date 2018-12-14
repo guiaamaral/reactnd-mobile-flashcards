@@ -17,7 +17,7 @@ class AddDeck extends Component {
     return {
       title: 'Create new deck',
       headerStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#008ECC',
       },
       headerTitleStyle: {
         fontWeight: 'bold',
@@ -52,8 +52,8 @@ class AddDeck extends Component {
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <View>
-          <Text>Title</Text>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text>Deck title:</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={this.onTextChange}
@@ -61,7 +61,7 @@ class AddDeck extends Component {
           />
           <TouchableOpacity
             disabled={!title}
-            style={[styles.button, { backgroundColor: 'green' }]}
+            style={[styles.button, { backgroundColor: '#008ECC' }]}
             onPress={this.submit}
           >
             <Text style={{ color: 'white' }}>ADD</Text>
@@ -79,18 +79,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInput: {
-    borderBottomWidth: 2,
-    borderColor: '#000',
+    borderBottomWidth: 1,
+    borderColor: '#333333',
+    marginBottom: 42,
     paddingTop: 4,
     paddingBottom: 4,
+    width: 250
   },
   button: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: Platform.OS === 'ios' ? 12 : 4,
-    marginTop: 16,
-    paddingTop: 16,
     paddingBottom: 16,
-    paddingLeft: 100,
-    paddingRight: 100,
+    paddingLeft: 60,
+    paddingRight: 60,
+    paddingTop: 16,
+    marginLeft: 16,
     justifyContent: 'center',
   },
 })

@@ -41,7 +41,7 @@ export default class App extends Component {
     return (
       <Provider store={createStore(reducer, applyMiddleware(thunk))}>
         <View style={styles.container}>
-          <HeaderBar backgroundColor="#F00" barStyle="light-content" />
+          <HeaderBar backgroundColor="#008ECC" barStyle="light-content" />
           <MainNavigator />
         </View>
       </Provider>

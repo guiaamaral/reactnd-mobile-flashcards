@@ -11,7 +11,7 @@ class DeckList extends Component {
     return {
       headerTitle: 'FlashCards',
       headerStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#008ECC',
       },
       headerTitleStyle: {
         fontWeight: 'bold',
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   add: {
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#008ECC',
     borderRadius: 30,
     color: 'white',
     justifyContent: 'center',

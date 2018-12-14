@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { FontAwesome } from '@expo/vector-icons'
 
-export default class DeckDetail extends Component {
+class DeckDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     const title = navigation.state.params.deckTitle
     return {
       title: `${title}`,
       headerStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#008ECC',
       },
       headerTitleStyle: {
         fontWeight: 'bold',
@@ -18,46 +20,69 @@ export default class DeckDetail extends Component {
   render() {
     const {decks, navigation} = this.props
     const title = navigation.state.params.deckTitle
-    const cards = navigation.state.params.deckCards
-    const cardsLength = navigation.state.params.deckCardsLength
+    const cards = this.props.decks[title].questions
 
     return (
       <View style={styles.container}>
         <View style={styles.info}>
           <Text style={{ fontSize: 24 }}>{title}</Text>
           <Text style={{ fontSize: 14, color: '#666' }}>
-            {cardsLength}
-            {cardsLength > 1
+            {cards.length}
+            {cards.length > 1
               ? ' cards'
               : ' card'
             }
           </Text>
         </View>
-        <View style={styles.btns}>
-          <TouchableOpacity
-            style={[styles.button, { marginLeft: 0, borderColor: 'gray', backgroundColor: 'white' }]}
-            onPress={() => navigation.navigate('AddCard', {
-              deckTitle: title,
-              deckCards: cardsLength,
-            })}
-          >
-            <Text>ADD CARD</Text>
-          </TouchableOpacity>
-          {cardsLength === 0
-            ? <View style={{ alignItems: 'center' }}>
-                <Text>Add some cards to play Quiz</Text>
+        {cards.length === 0
+          ? <View>
+            <TouchableOpacity
+              style={[styles.button, { alignItems: 'center', marginLeft: 0, borderColor: 'gray', backgroundColor: 'white' }]}
+              onPress={() => navigation.navigate('AddCard', {
+                deckTitle: title
+              })}
+            >
+              <FontAwesome
+                name="plus"
+                size={16}
+                color={'white'}
+              />
+              <Text style={{ marginLeft: 4 }}>ADD CARD</Text>
+            </TouchableOpacity>
+            <View style={{ alignItems: 'center' }}>
+              <Text>Add some cards to play Quiz</Text>
             </View>
-            : <TouchableOpacity
-              style={[styles.button, { backgroundColor: 'green' }]}
+          </View>
+          : <View style={styles.btns}>
+            <TouchableOpacity
+              style={[styles.button, { marginLeft: 0, borderColor: 'gray', backgroundColor: 'white' }]}
+              onPress={() => navigation.navigate('AddCard', {
+                deckTitle: title
+              })}
+            >
+              <FontAwesome
+                name="plus"
+                size={16}
+                color={'black'}
+              />
+              <Text style={{ marginLeft: 4 }}>ADD CARD</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: '#008ECC' }]}
               onPress={() => navigation.navigate('Quiz', {
               deckTitle: title,
               deckCards: cards
             })}
             >
-              <Text style={{ color: 'white' }}>START QUIZ</Text>
+              <FontAwesome
+                name="play"
+                size={16}
+                color={'white'}
+              />
+              <Text style={{ marginLeft: 4, color: 'white' }}>START QUIZ</Text>
             </TouchableOpacity>
-          }
-        </View>
+          </View>
+        }
       </View>
     )
   }
@@ -78,13 +103,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   button: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: Platform.OS === 'ios' ? 12 : 4,
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 42,
-    paddingRight: 44,
+    padding: 16,
     marginLeft: 16,
-    marginBottom: 16,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 })
+
+export default connect(state => state)(DeckDetail)

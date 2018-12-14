@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native'
+import { Entypo, FontAwesome } from '@expo/vector-icons'
 
 export default class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -7,7 +8,7 @@ export default class Quiz extends Component {
     return {
       title: `Quiz about ${title}`,
       headerStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#008ECC',
       },
       headerTitleStyle: {
         fontWeight: 'bold',
@@ -20,6 +21,7 @@ export default class Quiz extends Component {
     correctAnswer: 0,
     showQuestion: true
   }
+  
   render() {
     const { navigation } = this.props
     const { index, correctAnswer, showQuestion } = this.state
@@ -33,26 +35,36 @@ export default class Quiz extends Component {
           <View style={[styles.container, { flex: 9 }]}>
             {showQuestion
             ? <View style={styles.item}>
-                <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 11 }}>Question:</Text>
+                <Text style={{ color: '#008ECC', fontWeight: 'bold', fontSize: 11, marginBottom: 12 }}>Question</Text>
                 <Text style={{ justifyContent: 'center', fontSize: 16 }}>{cards[index].question}</Text>
                 <View style={[styles.btns, { justifyContent: 'center' }]}>
                   <TouchableOpacity
-                    style={[styles.button, { backgroundColor: 'green' }]}
+                    style={[styles.button, { backgroundColor: '#008ECC' }]}
                     onPress={() => this.setState({ showQuestion: false })}>
-                    <Text style={{ color: 'white' }}>SHOW ANSWER</Text>
+                    <FontAwesome
+                      name="eye"
+                      size={16}
+                      color={'white'}
+                    />
+                    <Text style={{ marginLeft: 4, color: 'white' }}>SHOW ANSWER</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             : <View style={styles.item}>
+                <Text style={{ color: '#008ECC', fontWeight: 'bold', fontSize: 11, marginBottom: 12 }}>Answer</Text>
                 <Text style={{ justifyContent: 'center', fontSize: 16 }}>{cards[index].answer}</Text>
                 <View style={styles.btns}>
                   <TouchableOpacity
-                    style={[styles.button, { backgroundColor: 'red', marginLeft: 0 }]}
+                    style={[styles.button, { backgroundColor: 'red', paddingLeft: 18, paddingRight: 18, marginLeft: 0 }]}
                     onPress={() => this.setState({
                       index: index + 1,
                       showQuestion: true
                    })}>
-                    <Text style={{ color: 'white' }}>INCORRECT</Text>
+                    <FontAwesome
+                      name="times"
+                      size={16}
+                      color={'white'}
+                    />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[styles.button, { backgroundColor: 'green' }]}
@@ -61,7 +73,11 @@ export default class Quiz extends Component {
                       correctAnswer: correctAnswer + 1,
                       showQuestion: true
                     })}>
-                    <Text style={{ color: 'white' }}>CORRECT</Text>
+                    <FontAwesome
+                      name="check"
+                      size={16}
+                      color={'white'}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -72,24 +88,46 @@ export default class Quiz extends Component {
           </View>
         </View>
         : <View style={[styles.container, { alignItems: 'center' }]}>
+            {(correctAnswer / index) * 100 < 50
+              ? <Entypo
+                name="emoji-sad"
+                size={42}
+                color={'#AAA'}
+              />
+              : <Entypo
+                name="emoji-happy"
+                size={42}
+                color={'#AAA'}
+              />
+            }
             <Text>You got {correctAnswer} out of {index} questions.</Text>
             <View style={styles.btns}>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'red', marginLeft: 0 }]}
+                style={[styles.button, { backgroundColor: '#008ECC', marginLeft: 0 }]}
+                onPress={() => navigation.navigate('DeckDetail', {
+                  deckTitle: title,
+                  deckCardse: cards.length,
+                })}>
+                <FontAwesome
+                  name="chevron-left"
+                  size={16}
+                  color={'white'}
+                />
+                <Text style={{ marginLeft: 4, color: 'white' }}>BACK TO DECK</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: '#008ECC' }]}
                 onPress={() => this.setState({
                   index: 0,
                   correctAnswer: 0,
                   showQuestion: true
                })}>
-                <Text style={{ color: 'white' }}>START AGAIN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'green' }]}
-                onPress={() => navigation.navigate('DeckDetail', {
-                  deckTitle: title,
-                  deckCardse: cards.length,
-                })}>
-                <Text style={{ color: 'white' }}>BACK TO DECK</Text>
+                <FontAwesome
+                  name="undo"
+                  size={16}
+                  color={'white'}
+                />
+                <Text style={{ marginLeft: 4, color: 'white' }}>START AGAIN</Text>
               </TouchableOpacity>
             </View>
         </View>
@@ -127,13 +165,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   button: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: Platform.OS === 'ios' ? 12 : 4,
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 42,
-    paddingRight: 44,
+    padding: 16,
     marginLeft: 16,
-    marginBottom: 16,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 })
