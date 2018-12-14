@@ -12,6 +12,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import thunk from 'redux-thunk'
 import { FontAwesome } from '@expo/vector-icons'
+import { setLocalNotification } from './utils/helpers'
 
 const HeaderBar = ({ backgroundColor, ...props }) => (
   <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -70,7 +71,10 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends Component {
-  render() {
+    componentDidMount() {
+        setLocalNotification();
+    }
+    render() {
     return (
       <Provider store={createStore(reducer, applyMiddleware(thunk))}>
         <View style={styles.container}>

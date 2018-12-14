@@ -22,3 +22,7 @@ cd reactnd-mobile-flashcards
 npm install
 npm start
 ```
+
+## Run
+
+Use [Expo](https://expo.io/) to test on Android and iOS.
