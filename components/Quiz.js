@@ -90,14 +90,16 @@ export default class Quiz extends Component {
         : <View style={[styles.container, { alignItems: 'center' }]}>
             {(correctAnswer / index) * 100 < 50
               ? <Entypo
-                name="emoji-sad"
+                name='emoji-sad'
                 size={42}
                 color={'#AAA'}
+                style={{ marginBottom: 24 }}
               />
               : <Entypo
-                name="emoji-happy"
+                name='emoji-happy'
                 size={42}
                 color={'#AAA'}
+                style={{ marginBottom: 24 }}
               />
             }
             <Text>You got {correctAnswer} out of {index} questions.</Text>
@@ -147,8 +149,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: Platform.OS === 'ios' ? 12 : 4,
     padding: 20,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 24,
+    marginRight: 24,
     alignItems: 'center',
     justifyContent: 'center',
     shadowRadius: 3,

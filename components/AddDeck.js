@@ -15,7 +15,7 @@ import { addDeck } from '../actions'
 class AddDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Create new deck',
+      title: 'FlashCards',
       headerStyle: {
         backgroundColor: '#008ECC',
       },

@@ -8,9 +8,10 @@ import Quiz from './components/Quiz'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducer'
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import thunk from 'redux-thunk'
+import { FontAwesome } from '@expo/vector-icons'
 
 const HeaderBar = ({ backgroundColor, ...props }) => (
   <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -18,12 +19,44 @@ const HeaderBar = ({ backgroundColor, ...props }) => (
   </View>
 )
 
-const MainNavigator = StackNavigator({
-  Home: {
-    screen: DeckList
+const Tabs = TabNavigator({
+  Decks: {
+    screen: DeckList,
+    navigationOptions: {
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name="list" size={28} color={tintColor} />
+    },
   },
   AddDeck: {
-    screen: AddDeck
+    screen: AddDeck,
+    navigationOptions: {
+      tabBarLabel: 'Add Deck',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name="plus" size={28} color={tintColor} />
+    },
+  }
+}, {
+  tabBarOptions: {
+    indicatorStyle: {
+      backgroundColor: '#73C2FB',
+    },
+    activeTintColor: Platform.OS === 'ios' ? '#008ECC' : 'white',
+    style: {
+      height: 56,
+      backgroundColor: Platform.OS === 'ios' ? 'white' : '#008ECC',
+      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      shadowOffset: {
+        width: 0,
+        height: 3
+      },
+      shadowRadius: 6,
+      shadowOpacity: 1
+    }
+  }
+})
+
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs
   },
   DeckDetail: {
     screen: DeckDetail

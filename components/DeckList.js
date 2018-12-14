@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
 import { getDecks } from '../actions'
 import { fetchDecks } from '../utils/api'
-import { Entypo } from '@expo/vector-icons'
 
 class DeckList extends Component {
   static navigationOptions = () => {
@@ -67,12 +66,6 @@ class DeckList extends Component {
             </TouchableOpacity>
           </View>
         ))}
-        <Entypo
-          name="add-to-list"
-          size={32}
-          style={styles.add}
-          onPress={() => this.props.navigation.navigate('AddDeck')}
-        />
       </View>
     )
   }
@@ -98,20 +91,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: 3
     },
-  },
-  add: {
-    alignItems: 'center',
-    backgroundColor: '#008ECC',
-    borderRadius: 30,
-    color: 'white',
-    justifyContent: 'center',
-    height: 52,
-    paddingTop: 10,
-    paddingLeft: 12,
-    width: 52,
-    bottom: 30,
-    position: 'absolute',
-    right: 30,
   }
 })
 
